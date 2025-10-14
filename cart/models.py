@@ -26,4 +26,4 @@ class CartItem(models.Model):
     def line_total(self):
         return self.quantity * self.service.base_price
 
-# Create your models here.
+
