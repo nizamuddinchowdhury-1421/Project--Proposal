@@ -1,164 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charsets="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - Cholonto--Rush</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
-            .cart-header {
-             background: linear-gradient(135deg, #007bff, #6610f2);
-             color: white;
-             padding: 2rem 0;
-             border-radius: 0 0 20px 20px;
-             margin-bottom: 2rem;
-             }
-             .service-card {
-             background-color: white;
-             border-radius: 15px;
-             overflow: hidden;
-             transition: transform 0.3s ease, box-shadow 0.3s ease;
-              margin-bottom: 1.5rem;
-              }
-              .service-card:hover {
-              transform: translateY(-5px);
-              box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-              }
-              .summary-card {
-              background: linear-gradient(135deg, #28a745, #20c997);
-              color: white;
-              border-radius: 15px;
-              padding: 1.5rem;
-              .summary-card .btn {
-              background-color: white;
-              color: #28a745;
-              font-weight: bold;
-              }
-              .empty-cart {
-              background-color: white;
-              border-radius: 20px;
-              padding: 3rem;
-              box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-              }
-              .price-tag {
-              background-color: #e9ecef;
-              padding: 0.25rem 0.5rem;
-              border-radius: 5px;
-              font-weight: bold;
-              }
-              .action-btn {
-              border-radius: 50px;
-              }
-              </style>
-</head>
-<body>
-    <div class="container my-5">
-        <div class="cart-header text-center">
-            <h1 class="display-5 fw-bold">
-                <i class="fas fa-shopping-bag me-3"></i>Your Shopping Cart
-            </h1>
-            <p class="lead mb-0 opacity-75">Manage and review your selected services</p>
-        </div>
+{% extends 'base.html' %}
+{% block title %}Cart - Cholonto--Rush{% endblock %}
+{% block content %}
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold mb-3">
+      <i class="fas fa-shopping-cart me-3 text-primary"></i>Your Cart
+    </h1>
+    <p class="lead text-muted">Review your selected services</p>
+  </div>
 
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="service-card shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-cogs text-success fs-3 me-3"></i>
-                                    <div>
-                                        <h5 class="mb-1 fw-bold">Plumbing Service</h5>
-                                        <small class="text-muted">Home Maintenance Category</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <span class="badge bg-info fs-5 px-3 py-2">2</span>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <div class="price-tag text-dark">৳500</div>
-                            </div>
-                             <div class="col-md-2 text-end">
-                                 <span class="fw-bold text-success fs-5">৳1000</span>
-                                 <a class="btn btn-outline-danger btn-sm action-btn ms-2" href="#">
-                                     <i class="fas fa-times"></i>
-                                 </a>
-                             </div>
+  {% if cart.items.all %}
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th><i class="fas fa-tools me-2"></i>Service</th>
+                  <th><i class="fas fa-hashtag me-2"></i>Qty</th>
+                  <th><i class="fas fa-tag me-2"></i>Price</th>
+                  <th><i class="fas fa-calculator me-2"></i>Total</th>
+                  <th><i class="fas fa-trash me-2"></i>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart.items.all %}
+                  <tr>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <i class="fas fa-wrench text-primary me-3"></i>
+                        <div>
+                          <h6 class="mb-0 fw-bold">{{ item.service.name }}</h6>
+                          <small class="text-muted">{{ item.service.category.name }}</small>
                         </div>
-                    </div>
-                </div>
-
-
-                <div class="service-card shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="row align-items-center">
-                             <div class="col-md-6">
-                                  <div class="d-flex align-items-center">
-                                       <i class="fas fa-paint-brush text-warning fs-3 me-3"></i>
-                                      <div>
-                                          <h5 class="mb-1 fw-bold">Painting Service</h5>
-                                          <small class="text-muted">Renovation Category</small>
-                                      </div>
-                                  </div>
-                             </div>
-                            <div class="col-md-2 text-center">
-                                <span class="badge bg-info fs-5 px-3 py-2">1</span>
-                            </div>
-                             <div class="col-md-2 text-center">
-                                  <div class="price-tag text-dark">৳1200</div>
-                             </div>
-                            <div class="col-md-2 text-end">
-                                 <span class="fw-bold text-success fs-5">৳1200</span>
-                                 <a class="btn btn-outline-danger btn-sm action-btn ms-2" href="#">
-                                     <i class="fas fa-times"></i>
-                                 </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-             <div class="col-lg-4">
-                  <div class="summary-card shadow-lg">
-                      <h4 class="mb-4">
-                          <i class="fas fa-file-invoice-dollar me-2"></i>Summary
-                      </h4>
-                      <div class="d-flex justify-content-between mb-3">
-                          <span>Subtotal</span>
-                          <span class="fw-bold">৳2200</span>
                       </div>
-                      <div class="d-flex justify-content-between mb-3">
-                          <span>Tax & Fees</span>
-                          <span class="fw-bold">৳0</span>
-                      </div>
-                      <hr style="border-color: rgba(255,255,255,0.3);">
-                      <div class="d-flex justify-content-between mb-4">
-                          <span class="h5 mb-0">Grand Total</span>
-                          <span class="h5 mb-0">৳2200</span>
-                      </div>
-                       <a class="btn btn-light w-100 py-3 fw-bold" href="/orders/checkout/">
-                           <i class="fas fa-lock me-2"></i>Checkout Securely
-                       </a>
-                      <div class="text-center mt-3 small opacity-75">
-                          <i class="fas fa-shield-alt me-1"></i>100% Secure Transactions
-                      </div>
-                  </div>
-             </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-primary fs-6">{{ item.quantity }}</span>
+                    </td>
+                    <td class="fw-bold">৳{{ item.service.base_price }}</td>
+                    <td class="fw-bold text-primary">৳{{ item.line_total }}</td>
+                    <td>
+                      <a class="btn btn-outline-danger btn-sm" href="/cart/remove/{{ item.id }}/">
+                        <i class="fas fa-trash me-1"></i>Remove
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="col-lg-4">
+      <div class="card shadow-sm border-0 sticky-top">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fas fa-receipt me-2"></i>Order Summary
+          </h5>
+          <hr>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Subtotal:</span>
+            <span class="fw-bold">৳{{ cart.total }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <span>Service Fee:</span>
+            <span class="fw-bold">৳0</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between mb-4">
+            <span class="h5 fw-bold">Total:</span>
+            <span class="h5 fw-bold text-primary">৳{{ cart.total }}</span>
+          </div>
+          <a class="btn btn-success w-100 py-2" href="/orders/checkout/">
+            <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+          </a>
+          <div class="text-center mt-3">
+            <small class="text-muted">
+              <i class="fas fa-shield-alt me-1"></i>Secure payment processing
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+    <div class="text-center py-5">
+      <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
+      <h3 class="text-muted mb-3">Your cart is Empty!</h3>
+      <p class="text-muted mb-4">Add some services to get started!</p>
+      <a href="/services/" class="btn btn-primary btn-lg">
+        <i class="fas fa-tools me-2"></i>Browse Services
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}
 
-
-
-
-</body>
